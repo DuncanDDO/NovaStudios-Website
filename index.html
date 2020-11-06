@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Nova Studios</title>
+	<meta name="author" content="Nova Studios">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<link rel="icon" href="images/logoSmall.png">
+	<style>
+	@font-face
+	{
+		font-family: valentine;
+		src: url(fonts/Valentine.otf);
+	}
+	html
+	{
+		scroll-behavior: smooth;
+	}
+	body
+	{
+		/* font-family: valentine; */
+	}
+	::-webkit-scrollbar
+	{ 
+		display: none;
+	}
+	.container
+	{
+		height: 100vh;
+	}
+	.container *
+	{
+		z-index: 99 !important;
+	}
+	.galaxy
+	{
+		height: 100vh;
+		perspective: 1px;
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
+	.galaxyLevel
+	{
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+	.galaxyLevel1
+	{
+		transform: translateZ(0);
+	}
+	.galaxyLevel2
+	{
+		transform: translateZ(-2px) scale(3);
+	}
+	.galaxyLevel3
+	{
+		transform: translateZ(-6px) scale(5);
+	}
+	.galaxyLevel4
+	{
+		transform: translateZ(-12px) scale(6);
+	}
+	.stars > * 
+	{
+		position: absolute;
+		top: -250%;
+		left: 0;
+		height: 500%;
+		width: 100%;
+		background-size: 200px 200px;
+		background-repeat: repeat;
+		background-image: radial-gradient(2px 2px at 40px 60px, #000, rgba(0, 0, 0, 0)),
+						  radial-gradient(2px 2px at 20px 50px, #000, rgba(0, 0, 0, 0)),
+						  radial-gradient(2px 2px at 30px 100px, #000, rgba(0, 0, 0, 0)),
+						  radial-gradient(2px 2px at 110px 90px, #000, rgba(0, 0, 0, 0)),
+						  radial-gradient(2px 2px at 190px 150px, #000, rgba(0, 0, 0, 0));
+	}
+	.stars span:nth-child(2)
+	{
+		transform: rotate(30deg);
+	}
+	.stars span:nth-child(3)
+	{
+		transform: rotate(60deg);
+	}
+	.stars span:nth-child(4)
+	{
+		transform: rotate(120deg);
+	}
+	.sidenav
+	{
+		width: 5em;
+		position: fixed;
+		z-index: 10;
+		top: 0;
+		left: 0;
+		overflow-x: hidden;
+		text-align: center;
+	}
+	.sidenav a
+	{
+		padding: 0.5em;
+		display: block;
+	}
+	.sidenav a:hover
+	{
+		width: 110%;
+	}
+	.sidenav a img
+	{
+		width: 3em;
+	}
+	.sidenav2
+	{
+		width: 5em;
+		position: fixed;
+		z-index: 10;
+		top: 0;
+		right: 0;
+		overflow-x: hidden;
+		text-align: center;
+	}
+	.sidenav2 a
+	{
+		padding: 0.5em;
+		display: block;
+	}
+	.sidenav2 a:hover
+	{
+		width: 110%;
+	}
+	.sidenav2 a img
+	{
+		width: 3em;
+	}
+	#brand
+	{
+		height: 100%;
+	}
+	#logo
+	{
+		padding-top: 15em;
+	}
+	#slogan
+	{
+		padding-top: 2%;
+	}
+	.project
+	{
+		margin-bottom: 10%;
+	}
+	.project img
+	{
+		border-radius: 5px;
+		box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+					0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+					0 12.5px 10px rgba(0, 0, 0, 0.06),
+					0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+					0 41.8px 33.4px rgba(0, 0, 0, 0.086);
+	}
+	h1, h2, h3
+	{
+		text-align: center;
+	}
+	.button
+	{
+		box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+		border-radius: 2em;
+		padding: 1em;
+		border: none;
+		background-color: white;
+		position: relative;
+		z-index: 99 !important;
+		transition-duration: 0.5s;
+		color: black;
+	}
+	.button:hover
+	{
+		background-color: #4f0b76;
+		color: white;
+	}
+	#scrollIndicator
+	{
+		width: 3em;
+	}
+	#scrollIndicatorParent
+	{
+		text-align: center;
+		transform: translateY(-4em);
+	}
+	.bounce
+	{
+		animation-iteration-count: infinite;
+		animation-duration: 1.5s;
+		animation: bounce 3.6s ease infinite;
+		transform-origin: 50% 50%;
+	}
+	@keyframes bounce
+	{
+		0%
+		{
+			transform: translateY(0);
+		}
+		5.55556%
+		{
+			transform: translateY(0);
+		}
+		11.11111%
+		{
+			transform: translateY(0);
+		}
+		22.22222%
+		{
+			transform: translateY(-15px);
+		}
+		27.77778%
+		{
+			transform: translateY(0);
+		}
+		33.33333%
+		{
+			transform: translateY(-15px);
+		}
+		44.44444%
+		{
+			transform: translateY(0);
+		}
+		100%
+		{
+			transform: translateY(0);
+		}
+	}
+	.description
+	{
+		text-align: center;
+	}
+	@media only screen and (max-width: 500px)
+	{
+		h1, h2,h3
+		{
+			text-align: left;
+		}
+		.description
+		{
+			text-align: left;
+		}
+	}
+	@media only screen and (max-width: 700px)
+	{
+		.sidenav2
+		{
+			width: 5em;
+			position: fixed;
+			z-index: 10;
+			left: 0;
+			padding-top: 15.5em;
+			overflow-x: hidden;
+			text-align: center;
+		}
+	}
+	</style>
+</head>
+<body>
+<div class="sidenav">
+	<a href="#game" id="gameLink">
+		<img src="images/game.png" alt="game">
+	</a>
+	<a href="#movie" id="movieLink">
+		<img src="images/movie.png" alt="movie">
+	</a>
+	<a href="#website" id="websiteLink">
+		<img src="images/websites.png" alt="website">
+	</a>
+	<a href="#lyric" id="lyricLink">
+		<img src="images/lyric.png" alt="lyric">
+	</a>
+</div>
+<div class="sidenav2">
+	<a href="pages/about.html">
+		<img src="images/us.png" alt="about">
+	</a>
+</div>
+<div class="galaxy">
+	<div class="container">
+		<div id="brand">
+			<div class="row" id="logo">
+				<div class="col-sm-3 col-xs-2"></div>
+				<div class="col-sm-6 col-xs-9">
+					<img src="images/logo.png" alt="logo" style="width: 100%;">
+				</div>
+				<div class="col-sm-3 col-xs-1"></div>
+			</div>
+			<div class="row" id="slogan">
+				<div class="col-sm-4 col-xs-3"></div>
+				<div class="col-sm-4 col-xs-7">
+					<img src="images/slogan.png" alt="slogan" style="width: 100%;">
+				</div>
+				<div class="col-sm-4 col-xs-2"></div>
+			</div>
+		</div>
+		<div id="scrollIndicatorParent">
+			<img id="scrollIndicator" src="http://image.flaticon.com/icons/svg/3/3907.svg" class="bounce">
+		</div>
+		<div id="game" class="project">
+			<div class="row">
+				<div class="col-sm-3 col-xs-2"></div>
+				<div class="col-sm-6 col-xs-9">
+					<h1>Games<h1>
+				</div>
+				<div class="col-sm-3 col-xs-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-1 col-xs-2"></div>
+				<div class="col-sm-10 col-xs-9">
+					<img src="images/block1.png" alt="block" style="width: 100%;">
+				</div>
+				<div class="col-sm-1 col-xs-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3 col-xs-2"></div>
+				<div class="col-sm-6 col-xs-9">
+					<h3>Tunnel Dash<h3>
+				</div>
+				<div class="col-sm-3 col-xs-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3 col-xs-2"></div>
+				<div class="col-sm-6 col-xs-9" style="background-color: white">
+					In this 2-player game you can race your friends through the tunnels to become the champion!
+				</div>
+				<div class="col-sm-3 col-xs-1"></div>
+			</div>
+			<div class="row" style="text-align: center; margin-top: 2%;">
+				<a href="pages/tunnelDash.html"><button class="button">View Project</button></a>
+			</div>
+		</div>
+		<div id="movie" class="project">
+			<div class="row">
+				<div class="col-sm-3 col-xs-2"></div>
+				<div class="col-sm-6 col-xs-9">
+					<h1>Short Films<h1>
+				</div>
+				<div class="col-sm-3 col-xs-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-1 col-xs-2"></div>
+				<div class="col-sm-10 col-xs-9">
+					<img src="images/block2.png" alt="block" style="width: 100%;">
+				</div>
+				<div class="col-sm-1 col-xs-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3 col-xs-2"></div>
+				<div class="col-sm-6 col-xs-9">
+					<h3>Life in the Shadows<h3>
+				</div>
+				<div class="col-sm-3 col-xs-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3 col-xs-2"></div>
+				<div class="col-sm-6 col-xs-9" style="background-color: white">
+					A short horror film about a group of friends who rent an Air B&amp;B and that night's unexpected events.
+				</div>
+				<div class="col-sm-3 col-xs-1"></div>
+			</div>
+			<div class="row" style="text-align: center; margin-top: 2%;">
+				<a href="pages/lifeInTheShadows.html"><button class="button">View Project</button></a>
+			</div>
+		</div>
+		<div id="website" class="project">
+			<div class="row">
+				<div class="col-sm-3 col-xs-2"></div>
+				<div class="col-sm-6 col-xs-9">
+					<h1>Websites<h1>
+				</div>
+				<div class="col-sm-3 col-xs-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-1 col-xs-2"></div>
+				<div class="col-sm-10 col-xs-9">
+					<img src="images/block3.png" alt="block" style="width: 100%;">
+				</div>
+				<div class="col-sm-1 col-xs-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3 col-xs-2"></div>
+				<div class="col-sm-6 col-xs-9">
+					<h3>Movinator<h3>
+				</div>
+				<div class="col-sm-3 col-xs-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3 col-xs-2"></div>
+				<div class="col-sm-6 col-xs-9" style="background-color: white">
+					A movie information database website with everything you need to know on the latest blockbusters.
+				</div>
+				<div class="col-sm-3 col-xs-1"></div>
+			</div>
+			<div class="row" style="text-align: center; margin-top: 2%;">
+				<a href="pages/movinator.html"><button class="button">View Project</button></a>
+			</div>
+		</div>
+		<div id="lyric" class="project">
+			<div class="row">
+				<div class="col-sm-3 col-xs-2"></div>
+				<div class="col-sm-6 col-xs-9">
+					<h1>Lyric Videos<h1>
+				</div>
+				<div class="col-sm-3 col-xs-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-1 col-xs-2"></div>
+				<div class="col-sm-10 col-xs-9">
+					<img src="images/block4.png" alt="block" style="width: 100%;">
+				</div>
+				<div class="col-sm-1 col-xs-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3 col-xs-2"></div>
+				<div class="col-sm-6 col-xs-9">
+					<h3>Stressed Out<h3>
+				</div>
+				<div class="col-sm-3 col-xs-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3 col-xs-2"></div>
+				<div class="col-sm-6 col-xs-9" style="background-color: white">
+					A promotional lyric video for the song titled 'Stressed Out' by the band, Twenty One Pilots.
+				</div>
+				<div class="col-sm-3 col-xs-1"></div>
+			</div>
+			<div class="row" style="text-align: center; margin-top: 2%;">
+				<a href="pages/stressedOut.html"><button class="button">View Project</button></a>
+			</div>
+			<div class="row">
+				<div class="col-sm-1 col-xs-2"></div>
+				<div class="col-sm-10 col-xs-9">
+					<img src="images/block5.png" alt="block" style="width: 100%; margin-top: 2em;">
+				</div>
+				<div class="col-sm-1 col-xs-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3 col-xs-2"></div>
+				<div class="col-sm-6 col-xs-9">
+					<h3>Fix You<h3>
+				</div>
+				<div class="col-sm-3 col-xs-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3 col-xs-2"></div>
+				<div class="col-sm-6 col-xs-9" style="background-color: white">
+					A promotional lyric video for the song titled 'Fix You' by the band, Coldplay.
+				</div>
+				<div class="col-sm-3 col-xs-1"></div>
+			</div>
+			<div class="row" style="text-align: center; margin-top: 2%;">
+				<a href="pages/fixYou.html"><button class="button">View Project</button></a>
+			</div>
+		</div>
+	</div>
+	<div class="galaxyLevel galaxyLevel2">
+		<div class="stars">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<div class="galaxyLevel galaxyLevel3">
+		<div class="stars">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<div class="galaxyLevel galaxyLevel4">
+		<div class="stars">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<div class="galaxyLevel galaxyLevel1">
+		<div class="stars">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>    
+</div>
+</body>
+<script>
+	$(".galaxy").scroll(function()
+	{
+		let scrollIndicator = $("#scrollIndicatorParent").offset();
+		if (scrollIndicator.top > 500)
+			$("#scrollIndicatorParent").css('visibility','visible');
+		else
+			$("#scrollIndicatorParent").css('visibility','hidden');
+		
+		let gameOffset = $("#game").offset();
+		if (gameOffset.top > -100 && gameOffset.top < 500)
+		{
+			$("#gameLink").css('border-left-style','solid');
+			$("#gameLink").css('border-left-color','#f6a50b');
+			$("#gameLink").css('border-left-width','0.5em');
+		}
+		else
+		{
+			$("#gameLink").css('border-left-style','none');
+		}
+		
+		let movieOffset = $("#movie").offset();
+		if (movieOffset.top > -100 && movieOffset.top < 500)
+		{
+			$("#movieLink").css('border-left-style','solid');
+			$("#movieLink").css('border-left-color','#ea7434');
+			$("#movieLink").css('border-left-width','0.5em');
+		}
+		else
+		{
+			$("#movieLink").css('border-left-style','none');
+		}
+		
+		let websiteOffset = $("#website").offset();
+		if (websiteOffset.top > -100 && websiteOffset.top < 500)
+		{
+			$("#websiteLink").css('border-left-style','solid');
+			$("#websiteLink").css('border-left-color','#c74956');
+			$("#websiteLink").css('border-left-width','0.5em');
+		}
+		else
+		{
+			$("#websiteLink").css('border-left-style','none');
+		}
+		
+		let lyricOffset = $("#lyric").offset();
+		if (lyricOffset.top > -300 && lyricOffset.top < 500)
+		{
+			$("#lyricLink").css('border-left-style','solid');
+			$("#lyricLink").css('border-left-color','#8b2d74');
+			$("#lyricLink").css('border-left-width','0.5em');
+		}
+		else
+		{
+			$("#lyricLink").css('border-left-style','none');
+		}
+	});
+</script>
+</html>

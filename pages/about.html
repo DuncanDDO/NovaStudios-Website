@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>About Us</title>
+	<meta name="author" content="Nova Studios">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<link rel="icon" href="../images/logoSmall.png">
+	<style>
+	@font-face
+	{
+		font-family: valentine;
+		src: url(fonts/Valentine.otf);
+	}
+	html
+	{
+		scroll-behavior: smooth;
+	}
+	body
+	{
+		/* font-family: valentine; */
+		/* background: linear-gradient(135deg, #3e028c -50%, #000 100%); */
+		/* background-image: linear-gradient(135deg, #e7627d 0%, #b8235a 25%, #801357 50%, #3d1635 75%, #1c1a27 100%); */
+	}
+	::-webkit-scrollbar
+	{ 
+		display: none;
+	}
+	.container
+	{
+		height: 100vh;
+	}
+	.container *
+	{
+		z-index: 99 !important;
+	}
+	.galaxy
+	{
+		height: 100vh;
+		perspective: 1px;
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
+	.galaxyLevel
+	{
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+	.galaxyLevel1
+	{
+		transform: translateZ(0);
+	}
+	.galaxyLevel2
+	{
+		transform: translateZ(-2px) scale(3);
+	}
+	.galaxyLevel3
+	{
+		transform: translateZ(-6px) scale(5);
+	}
+	.galaxyLevel4
+	{
+		transform: translateZ(-12px) scale(6);
+	}
+	.stars > * 
+	{
+		position: absolute;
+		top: -250%;
+		left: 0;
+		height: 500%;
+		width: 100%;
+		background-size: 200px 200px;
+		background-repeat: repeat;
+		background-image: radial-gradient(2px 2px at 40px 60px, #000, rgba(0, 0, 0, 0)),
+						  radial-gradient(2px 2px at 20px 50px, #000, rgba(0, 0, 0, 0)),
+						  radial-gradient(2px 2px at 30px 100px, #000, rgba(0, 0, 0, 0)),
+						  radial-gradient(2px 2px at 110px 90px, #000, rgba(0, 0, 0, 0)),
+						  radial-gradient(2px 2px at 190px 150px, #000, rgba(0, 0, 0, 0));
+	}
+	.stars span:nth-child(2)
+	{
+		transform: rotate(30deg);
+	}
+	.stars span:nth-child(3)
+	{
+		transform: rotate(60deg);
+	}
+	.stars span:nth-child(4)
+	{
+		transform: rotate(120deg);
+	}
+	.sidenav
+	{
+		height: 100%;
+		width: 5em;
+		position: fixed;
+		z-index: 10;
+		top: 0;
+		left: 0;
+		overflow-x: hidden;
+		text-align: center;
+	}
+	.sidenav a
+	{
+		padding: 0.5em;
+		display: block;
+	}
+	.sidenav a img
+	{
+		width: 3em;
+	}
+	.sidenav a:hover
+	{
+		width: 110%;
+	}
+	#padding1
+	{
+		padding-top: 2em;
+	}
+	.padding2
+	{
+		margin-bottom: 2em;
+	}
+	video
+	{
+		border-radius: 5px;
+		box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+					0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+					0 12.5px 10px rgba(0, 0, 0, 0.06),
+					0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+					0 41.8px 33.4px rgba(0, 0, 0, 0.086);
+	}
+	h1, h2, h3
+	{
+		text-align: center;
+	}
+	.bounce
+	{
+		animation-iteration-count: infinite;
+		animation-duration: 1.5s;
+		animation: bounce 3.6s ease infinite;
+		transform-origin: 50% 50%;
+	}
+	@keyframes bounce
+	{
+		0%
+		{
+			transform: translateY(0);
+		}
+		5.55556%
+		{
+			transform: translateY(0);
+		}
+		11.11111%
+		{
+			transform: translateY(0);
+		}
+		22.22222%
+		{
+			transform: translateY(-15px);
+		}
+		27.77778%
+		{
+			transform: translateY(0);
+		}
+		33.33333%
+		{
+			transform: translateY(-15px);
+		}
+		44.44444%
+		{
+			transform: translateY(0);
+		}
+		100%
+		{
+			transform: translateY(0);
+		}
+	}
+	.button
+	{
+		box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+		border-radius: 2em;
+		padding: 1em;
+		border: none;
+		background-color: white;
+		position: relative;
+		z-index: 99 !important;
+		transition-duration: 0.5s;
+		color: black;
+	}
+	.button:hover
+	{
+		background-color: #4f0b76;
+		color: white;
+	}
+	.me
+	{
+		background-color: white;
+		text-align: left;
+		font-size: 0.75em;
+	}
+	</style>
+</head>
+<body>
+<div class="sidenav">
+	<a href="../index.html">
+		<img src="../images/back.png" alt="back">
+	</a>
+</div>
+<div class="galaxy">
+	<div class="container">
+		<div class="row" id="padding1">
+			<div class="col-sm-3 col-xs-2"></div>
+			<div class="col-sm-6 col-xs-9">
+				<h1>About Us<h1>
+			</div>
+			<div class="col-sm-3 col-xs-1"></div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4 col-xs-9 col-xs-offset-2 col-sm-offset-0">
+				<img src="../images/michael.jpg" class="img-responsive img-circle margin" style="display: inline; width: 100%;" alt="Photo of Michael Smith">
+				<h3>Michael Smith<h3>
+				<div class="me padding2">
+					<p>Date of Birth: 1998/11/02</p>
+					<p>Field of Study: BIS Multimedia</p>
+					<p>Year of study: Final Year</p>
+					<p>Email: u17023964@tuks.co.za</p>
+					<p>Phone Number: 0605062733</p>
+				</div>
+			</div>
+			<div class="col-sm-4 col-xs-9 col-xs-offset-2 col-sm-offset-0">
+				<img src="../images/divan.jpg" class="img-responsive img-circle margin" style="display: inline; width: 100%;" alt="Photo of Michael Smith">
+				<h3>Divan Scholtz<h3>
+				<div class="me padding2">
+					<p>Date of Birth: 1998/04/08</p>
+					<p>Field of Study: BIS Multimedia</p>
+					<p>Year of study: Final Year</p>
+					<p>Email: u17010382@tuks.co.za</p>
+					<p>Phone Number: 0743794679</p>
+				</div>
+			</div>
+			<div class="col-sm-4 col-xs-9 col-xs-offset-2 col-sm-offset-0">
+				<img src="../images/duncan.jpg" class="img-responsive img-circle margin" style="display: inline; width: 100%;" alt="Photo of Michael Smith">
+				<h3>Duncan Oosthizen<h3>
+				<div class="me padding2">
+					<p>Date of Birth: 1999/09/25</p>
+					<p>Field of Study: BIS Multimedia</p>
+					<p>Year of study: Final Year</p>
+					<p>Email: u18165673@tuks.co.za</p>
+					<p>Phone Number: 0822989968</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="galaxyLevel galaxyLevel2">
+		<div class="stars">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<div class="galaxyLevel galaxyLevel3">
+		<div class="stars">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<div class="galaxyLevel galaxyLevel4">
+		<div class="stars">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<div class="galaxyLevel galaxyLevel1">
+		<div class="stars">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>    
+</div>
+</body>
+</html>
